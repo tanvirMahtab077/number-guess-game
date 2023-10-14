@@ -51,6 +51,7 @@
             gameOver = true;
             document.querySelector('.btn').style.display = 'none'
             document.querySelector('.restart').style.display = 'inline'
+            document.querySelector('#input-field').disabled = true
           } else {
             if (userGuess < correctAns) {
               alert("Correct ans is greater!");
