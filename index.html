@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Number Guess Game</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h2>Guess A Number Between 1 to 10</h2>
+      <div class="form">
+        <input id="input-field" type="number" />
+        <button class="btn">Check</button>
+        <button class="restart">Restart</button>
+      </div>
+      <div class="remaining-chance">Remaining Chance 3</div>
+    </div>
+    <script>
+      let low = 1;
+      let high = 10;
+      let correctAns = getRandomInt(low, high);
+      let btn = document.querySelector(".btn");
+      let chance = 3;
+      let gameOver = false;
+      btn.addEventListener("click", () => {
+        let guessedNumber = document.querySelector("#input-field").value;
+        let userGuess = parseInt(guessedNumber);
+        if (gameOver) {
+          return;
+        }
+        if (isNaN(userGuess) || userGuess < low || userGuess > high) {
+          alert("Please enter a valid number between 1 and 10.");
+          document.querySelector("#input-field").value = "";
+        } else {
+          chance--;
+          if (userGuess === correctAns) {
+            alert(
+              `Congratulations! You guessed the correct number: ${correctAns}`
+            );
+            document.querySelector("#input-field").value = "";
+            gameOver = true;
+          } else if (chance === 0) {
+            alert(
+              `The correct number was ${correctAns}. Game over.Please restart...`
+            );
+            document.querySelector("#input-field").value = "";
+            document.querySelector(
+              ".remaining-chance"
+            ).innerHTML = `Remaining Chance ${chance}`;
+            gameOver = true;
+            document.querySelector('.btn').style.display = 'none'
+            document.querySelector('.restart').style.display = 'inline'
+          } else {
+            if (userGuess < correctAns) {
+              alert("Correct ans is greater!");
+              document.querySelector("#input-field").value = "";
+              document.querySelector(
+              ".remaining-chance"
+            ).innerHTML = `Remaining Chance ${chance}`;
+            } else if (userGuess > correctAns) {
+              alert("Correct ans is smaller!");
+              document.querySelector("#input-field").value = "";
+              document.querySelector(
+              ".remaining-chance"
+            ).innerHTML = `Remaining Chance ${chance}`;
+            }
+          }
+        }
+      });
+      
+      document.querySelector('.restart').addEventListener('click',()=>{
+        window.location.reload(true)
+      })
+      function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+      }
+    </script>
+  </body>
+</html>
